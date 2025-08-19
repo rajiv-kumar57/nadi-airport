@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Slide = {
   id: string;
@@ -56,7 +56,9 @@ export default function HeroCarousel({ slides = unsplashSlides }: { slides?: Sli
   useEffect(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => setIndex((i) => (i + 1) % slides.length), 6000);
-    return () => timeoutRef.current && clearTimeout(timeoutRef.current);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [index, slides.length]);
 
   function prev() {

@@ -5,7 +5,7 @@ type Item = {
   title: string;
   description: string;
   href: string;
-  icon: (props: { className?: string }) => JSX.Element;
+  icon: (props: { className?: string }) => React.ReactElement;
 };
 
 function BusIcon({ className = "h-7 w-7" }: { className?: string }) {
@@ -99,7 +99,7 @@ export default function GettingToFrom() {
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[color:var(--color-brand)]">
           Getting To & From
         </h2>
-        <p className="mt-2 text-black/60">Wherever you're going, we'll help you get there.</p>
+        <p className="mt-2 text-black/60">Wherever you&apos;re going, we&apos;ll help you get there.</p>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           {items.map(({ key, title, description, href, icon: Icon }) => (

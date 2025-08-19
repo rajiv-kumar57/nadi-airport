@@ -39,7 +39,7 @@ export default function NewsletterCTA() {
                 Subscribe and Get 10% off Fast Track & Lounges
               </h3>
               <p className="mt-6 text-sm text-black/70 max-w-2xl">
-                By clicking 'Subscribe' you agree to the website's
+                By clicking &apos;Subscribe&apos; you agree to the website&apos;s
                 <a href="#" className="underline decoration-[color:var(--color-brand)]/40 underline-offset-4 ml-1">terms and conditions</a>
                 <span> and </span>
                 <a href="#" className="underline decoration-[color:var(--color-brand)]/40 underline-offset-4">privacy notice</a>.
