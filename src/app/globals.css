@@ -3,11 +3,20 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Brand theme tokens (adjust to re-theme) */
+  /* Nadi International vibe: deep Pacific blue with lagoon cyan accents */
+  --brand: #0b2748; /* deep pacific navy */
+  --brand-accent: #00bcd4; /* lagoon cyan */
+  --on-brand: #e6f8ff; /* light sky for text on brand */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand, #073a36);
+  --color-brand-accent: var(--brand-accent);
+  --color-on-brand: var(--on-brand, #e9f5f2);
+  --color-outline: var(--outline, color-mix(in oklab, var(--on-brand) 30%, transparent));
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,11 +25,24 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    /* You can override brand tokens for dark specifically if desired */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Use the Next.js font variable set on <body> via layout.tsx */
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
+
+.underline-offset-8 {
+  text-underline-offset: 8px;
+}
+
+/* Theme utility classes for header */
+.bg-brand { background-color: var(--color-brand); }
+.text-on-brand { color: var(--color-on-brand); }
+.border-outline { border-color: var(--color-outline); }
+.text-brand { color: var(--color-brand); }
