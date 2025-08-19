@@ -10,7 +10,7 @@ function IconWrap({ children }: { children: React.ReactNode }) {
 
 export default function ContactHelp() {
   return (
-    <section className="py-14">
+    <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[color:var(--color-brand)]">
           Have questions?

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type News = {
   id: string;
@@ -54,13 +54,36 @@ const items: News[] = [
 
 export default function LatestNews() {
   const [index, setIndex] = useState(0);
-  const visible = 3; // cards visible on desktop
+  const [visible, setVisible] = useState(3);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Adjust visible count based on viewport
+  useEffect(() => {
+    const update = () => {
+      const lg = window.matchMedia("(min-width: 1024px)").matches;
+      const sm = window.matchMedia("(min-width: 640px)").matches;
+      setVisible(lg ? 3 : sm ? 2 : 1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  function scrollToIndex(nextIndex: number) {
+    const el = containerRef.current;
+    const item = itemRefs.current[nextIndex];
+    if (!el || !item) return;
+    el.scrollTo({ left: item.offsetLeft, behavior: "smooth" });
+    setIndex(nextIndex);
+  }
 
   function prev() {
-    setIndex((i) => Math.max(0, i - 1));
+    scrollToIndex(Math.max(0, index - 1));
   }
   function next() {
-    setIndex((i) => Math.min(items.length - visible, i + 1));
+    const maxIndex = Math.max(0, items.length - visible);
+    scrollToIndex(Math.min(maxIndex, index + 1));
   }
 
   return (
@@ -75,17 +98,26 @@ export default function LatestNews() {
           </Link>
         </div>
 
-        <div className="mt-6 overflow-hidden">
-          <div
-            className="flex gap-6 transition-transform duration-500"
-            style={{ transform: `translateX(-${index * (100 / visible)}%)` }}
-          >
-            {items.map((n) => (
-              <article
+        <div className="mt-6 overflow-x-auto lg:overflow-hidden scroll-smooth" ref={containerRef} onScroll={() => {
+          const el = containerRef.current;
+          if (!el) return;
+          // Find the closest card based on scroll position
+          let closest = 0;
+          let best = Infinity;
+          itemRefs.current.forEach((child, idx) => {
+            const dist = Math.abs((child?.offsetLeft ?? 0) - el.scrollLeft);
+            if (dist < best) { best = dist; closest = idx; }
+          });
+          setIndex(closest);
+        }}>
+          <div className="flex gap-4 sm:gap-6">
+            {items.map((n, i) => (
+              <div
                 key={n.id}
-                className="min-w-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                className="snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3"
+                ref={(el) => { itemRefs.current[i] = el; }}
               >
-                <Link href={n.href} className="group block">
+                <Link href={n.href} className="group block pr-2 sm:pr-3">
                   <div className="relative h-56 sm:h-64 overflow-hidden rounded-3xl ring-1 ring-black/10">
                     <Image src={n.image} alt="" fill className="object-cover" />
                   </div>
@@ -99,7 +131,7 @@ export default function LatestNews() {
                     </h3>
                   </div>
                 </Link>
-              </article>
+              </div>
             ))}
           </div>
         </div>

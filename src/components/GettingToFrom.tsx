@@ -101,20 +101,20 @@ export default function GettingToFrom() {
         </h2>
         <p className="mt-2 text-black/60">Wherever you&apos;re going, we&apos;ll help you get there.</p>
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        <div className="mt-8 grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
           {items.map(({ key, title, description, href, icon: Icon }) => (
             <div
               key={key}
-              className="flex items-center gap-6 rounded-3xl bg-white ring-1 ring-black/10 p-4 sm:p-6"
+              className="flex items-center gap-4 sm:gap-6 rounded-3xl bg-white ring-1 ring-black/10 p-4 sm:p-6"
             >
               <div className="shrink-0 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-[color-mix(in_oklab,var(--color-brand),white_85%)] text-[color:var(--color-brand)] ring-1 ring-black/10">
                 <Icon className="h-8 w-8" />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-xl font-semibold text-[color:var(--color-brand)]">{title}</div>
-                <p className="mt-1 text-sm text-black/70 truncate sm:whitespace-normal">{description}</p>
+                <div className="text-lg sm:text-xl font-semibold text-[color:var(--color-brand)]">{title}</div>
+                <p className="mt-1 text-sm text-black/70 line-clamp-2 sm:line-clamp-none">{description}</p>
               </div>
-              <div className="pl-4 sm:pl-6">
+              <div className="pl-2 sm:pl-6 shrink-0">
                 <LearnMore href={href} />
               </div>
             </div>

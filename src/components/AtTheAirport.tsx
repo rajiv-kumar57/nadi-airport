@@ -62,20 +62,20 @@ const entries: Entry[] = [
 
 export default function AtTheAirport() {
   return (
-    <section className="py-14">
+    <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[color:var(--color-brand)]">
           At The Airport
         </h2>
 
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {entries.map((e) => (
             <Link
               key={e.key}
               href={e.href}
               className="group block"
             >
-              <div className="relative h-64 w-full overflow-hidden rounded-3xl ring-1 ring-black/10">
+              <div className="relative h-52 sm:h-64 w-full overflow-hidden rounded-3xl ring-1 ring-black/10">
                 <Image src={e.image} alt="" fill className="object-cover" />
               </div>
               <div className="mt-3 flex items-start justify-between gap-4">

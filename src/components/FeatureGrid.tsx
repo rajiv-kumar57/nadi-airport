@@ -51,16 +51,16 @@ const placeholders: Card[] = [
 
 export default function FeatureGrid({ cards = placeholders }: { cards?: Card[] }) {
   return (
-    <section className="py-12 sm:py-16">
+    <section className="py-10 sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
           {cards.map((c) => (
             <a
               key={c.id}
               href={c.href}
               className="group overflow-hidden rounded-2xl ring-1 ring-black/10 bg-white shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="relative h-48">
+              <div className="relative h-44 sm:h-48">
                 <Image src={c.image} alt="" fill className="object-cover" />
               </div>
               <div className="p-5">

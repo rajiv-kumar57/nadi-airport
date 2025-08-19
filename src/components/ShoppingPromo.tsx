@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ShoppingPromo() {
   return (
-    <section className="py-12 sm:py-16">
+    <section className="py-10 sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[color:var(--color-brand)]">
           Airport Shopping
@@ -10,7 +10,7 @@ export default function ShoppingPromo() {
 
         <div
           className="mt-6 grid gap-4 grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] lg:grid-rows-2"
-          style={{ gridTemplateRows: "minmax(22rem,1fr) minmax(22rem,1fr)" }}
+          style={{ gridTemplateRows: "minmax(18rem,1fr) minmax(18rem,1fr)" }}
         >
           {/* Big feature card */}
           <a href="#" className="group relative overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white shadow-sm lg:row-span-2 lg:col-start-1">

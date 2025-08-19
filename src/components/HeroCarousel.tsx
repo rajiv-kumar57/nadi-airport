@@ -69,7 +69,7 @@ export default function HeroCarousel({ slides = unsplashSlides }: { slides?: Sli
   }
 
   return (
-    <section className="relative h-[62vh] min-h-[420px] w-full overflow-hidden">
+    <section className="relative h-[62vh] min-h-[360px] w-full overflow-hidden">
       {slides.map((s, i) => (
         <div
           key={s.id}
