@@ -1,5 +1,6 @@
 import HeroCarousel from "@/components/HeroCarousel";
 import FlightSearchBar from "@/components/FlightSearchBar";
+import Flights from "@/components/Flights";
 import NewsletterCTA from "@/components/NewsletterCTA";
 import FeatureGrid from "@/components/FeatureGrid";
 import ShoppingPromo from "@/components/ShoppingPromo";
@@ -13,6 +14,7 @@ export default function Home() {
     <div className="min-h-screen w-full text-black">
       <HeroCarousel />
       <FlightSearchBar />
+      <Flights />
       <FeatureGrid />
       <ShoppingPromo />
       <GettingToFrom />

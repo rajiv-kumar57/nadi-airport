@@ -202,16 +202,20 @@ export default function FlightSearchBar() {
     return () => controller.abort();
   }, []);
 
+  function buildFlightsHash(t: Mode, qStr: string, d: string) {
+    if (t === "parking" || t === "connections") return "#flights";
+    return `#flights?type=${t}&q=${encodeURIComponent(
+      qStr
+    )}&date=${encodeURIComponent(d)}`;
+  }
+
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (mode === "parking") {
       window.location.hash = "#parking";
       return;
     }
-    const url = `#flights?type=${mode}&q=${encodeURIComponent(
-      query
-    )}&date=${encodeURIComponent(date)}`;
-    window.location.hash = url;
+    window.location.hash = buildFlightsHash(mode, query, date);
   }
 
   const linkLabel =
@@ -220,6 +224,49 @@ export default function FlightSearchBar() {
       : mode === "arrivals"
       ? "View all arrivals"
       : "View all flights";
+
+  // Parking form state
+  const [arriveDate, setArriveDate] = useState<string>(() => date);
+  const [arriveTime, setArriveTime] = useState<string>("10:00");
+  const [exitDate, setExitDate] = useState<string>(() => {
+    const t = new Date(date);
+    t.setDate(t.getDate() + 1);
+    const y = t.getFullYear();
+    const m = String(t.getMonth() + 1).padStart(2, "0");
+    const d = String(t.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  });
+  const [exitTime, setExitTime] = useState<string>("18:00");
+  const [terminal, setTerminal] = useState<"T2" | "T3" | "T4">("T2");
+
+  const arriveRef = useRef<HTMLInputElement | null>(null);
+  const exitRef = useRef<HTMLInputElement | null>(null);
+
+  const arriveLong = useMemo(() => {
+    try {
+      return new Date(arriveDate).toLocaleDateString(undefined, {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch {
+      return arriveDate;
+    }
+  }, [arriveDate]);
+
+  const exitLong = useMemo(() => {
+    try {
+      return new Date(exitDate).toLocaleDateString(undefined, {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch {
+      return exitDate;
+    }
+  }, [exitDate]);
 
   return (
     <section className="relative z-20 -mt-10">
@@ -239,7 +286,12 @@ export default function FlightSearchBar() {
                 <button
                   key={t.key}
                   type="button"
-                  onClick={() => setMode(t.key)}
+                  onClick={() => {
+                    setMode(t.key);
+                    if (t.key === "arrivals" || t.key === "departures") {
+                      window.location.hash = buildFlightsHash(t.key, "", date);
+                    }
+                  }}
                   className="relative pb-3"
                 >
                   <span className="opacity-95 hover:opacity-100">
@@ -303,7 +355,9 @@ export default function FlightSearchBar() {
             <div className="flex items-center justify-end lg:pl-4">
               <button
                 type="button"
-                onClick={() => (window.location.hash = "#flights")}
+                onClick={() =>
+                  (window.location.hash = buildFlightsHash(mode, "", date))
+                }
                 className="inline-flex items-center gap-2 font-semibold"
               >
                 <span>{linkLabel}</span>
